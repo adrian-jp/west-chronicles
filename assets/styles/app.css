@@ -165,6 +165,7 @@ input.custom-file-input-button {
     background: blue;
     color: white;
 }
+
 label.custom-file-label:before{
     font-family: "Font Awesome 5 Free", serif;
     content: "\f007"

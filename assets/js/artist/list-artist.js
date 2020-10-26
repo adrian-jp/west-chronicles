@@ -12,9 +12,10 @@ $(function () {
     });
 
 // Arrete le retournement de la carte au click sur "plus de détail"
-    $(document).on('click', '.detail', function () {
+    $(document).on('click', '.list-album', function () {
         $('.flip-card-inner').removeClass('flipped');
     });
+
 })
 
 

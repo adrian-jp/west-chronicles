@@ -75,7 +75,7 @@ class MainController extends AbstractController
         if ($formSearchArtist->isSubmitted() && $formSearchArtist->isValid()) {
             $artists = $this->artistRepository->findAllArtistsPaginate($pageNumber, Artist::MAX_PER_PAGE, $searchArtist);
             return $this->render('artist/index.html.twig', [
-                'artists' => $artists->getItems()
+                'artists' => $artists
             ]);
         }
 
