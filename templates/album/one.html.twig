@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Album Player
+{% endblock %}
+
+{% block body %}
+
+    <main>
+        <hr>
+        <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0 card-position">
+            <div class="card border-0 card-body">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <div class="container">
+                                {% include 'artist/_template-album-card.html.twig' %}
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <hr><hr>
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('one_album') }}
+        {{ encore_entry_script_tags('media_player') }}
+    {% endblock %}
+{% endblock %}
+

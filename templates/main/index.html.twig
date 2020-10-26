@@ -1,0 +1,24 @@
+{% extends 'base-welcome.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+{% block stylesheets %}
+    {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+    {{ parent() }}
+    {{ encore_entry_link_tags('welcome') }}
+
+    <!-- Renders a link tag (if your module requires any CSS)
+         <link rel="stylesheet" href="/build/app.css"> -->
+{% endblock %}
+{% block body %}
+    <div class="banner-image">
+        <div class="banner-text">
+            <h1>Bienvenue sur West-Chronicles</h1>
+            <p>Le site répertoire du mouvement Hip-Hop de l'Ouest</p>
+            <a href="{{ path('home') }}" class="btn btn-lg btn-primary">Enter</a>
+        </div>
+    </div>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('welcome') }}
+    {% endblock %}
+{% endblock %}

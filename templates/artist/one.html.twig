@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <hr>
+        <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0 card-position">
+            <div class="card border-0 card-body">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <h1>{{ artist.nom }}</h1>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div id="show-artist">
+
+                                </div>
+                                <ul>
+                                {% for album in artist.albums %}
+                                    <li><a href="{{ path('one_album', {'id':album.id}) }}">{{ album.nom }}</a></li>
+                                {% endfor %}
+                                </ul>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr><hr>
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('one-artist') }}
+        {{ encore_entry_script_tags('media_player') }}
+    {% endblock %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

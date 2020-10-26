@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+<main>
+    <hr>
+    <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0 card-position">
+        <div class="card border-0 card-body">
+            <div class="form-group">
+                <div class="form-row ml-2 mt-2">
+                    <h1>{{ artist.nom }}</h1>
+                    <div class="container">
+                        {% for album in artist.albums %}
+                            <h5>{{ album.nom }}</h5>
+                            <audio id="audio" preload="none" tabindex="0">
+
+                                Your browser does not support HTML5 audio.
+                            </audio>
+
+                            <div class="player">
+
+                                <div class="large-toggle-btn">
+                                    <i class="large-play-btn"><span class="screen-reader-text">Large toggle button</span></i>
+                                </div>
+                                <!-- /.play-box -->
+
+                                <div class="info-box">
+                                    <div class="track-info-box">
+                                        <div class="track-title-text"></div>
+                                        <div class="audio-time">
+                                            <span class="current-time">00:00</span> /
+                                            <span class="duration">00:00</span>
+                                        </div>
+                                    </div>
+                                    <!-- /.info-box -->
+
+                                    <div class="progress-box">
+                                        <div class="progress-cell">
+                                            <div class="progress">
+                                                <div class="progress-buffer"></div>
+                                                <div class="progress-indicator"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.progress-box -->
+
+                                <div class="controls-box">
+                                    <i class="previous-track-btn disabled"><span class="screen-reader-text">Previous track button</span></i>
+                                    <i class="next-track-btn"><span class="screen-reader-text">Next track button</span></i>
+                                </div>
+                                <!-- /.controls-box -->
+                                <!-- /.player -->
+
+                                <div class="play-list" id="play-list">
+
+
+
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('one-artist') }}
+        {{ encore_entry_script_tags('media_player') }}
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}
+

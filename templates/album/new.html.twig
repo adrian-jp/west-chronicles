@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        <hr>
+        {% if ajout is same as(true) %}
+            <h3>Ajouter nouvel album</h3>
+        {% else %}
+            <h3>Modifier album</h3>
+            <a href="{{
+                path('one_album', {'id': album.id})
+            }}" class="btn btn-primary float-right ml-2"><i class="fas fa-arrow-left"></i> Retour à l'album</a>
+        {% endif %}
+        {{ form_start(albumForm, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="card shadow mr-3 w-50 mt-3 mb-3 mb-lg-0 card-position-track">
+            <div class="card border-0 card-body-track">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page__split">
+                                        <div class="page__main">
+                                            <div class="row">
+                                                <div class="col mb-2">{{ form_widget(albumForm.nom) }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-2">{{ form_widget(albumForm.artists) }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-2">{{ form_widget(albumForm.image) }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row float-right ml-5">
+                                            {% if ajout is same as(true) %}
+                                                <div class="col mb-2">{{ form_widget(albumForm.tracks) }}</div>
+                                            {% else %}
+                                                <div class="col-12">
+                                                <ul>
+                                                    {% for track in album.tracks %}
+                                                        <li class="mb-2">
+                                                            {{ track.titre }}
+                                                            <a name="delete-{{ track.titre }}" href="{{ path('delete_track', {'id': album.id, 'track_id': track.id}) }}" class="album-track-collection collection-remove btn btn-danger btn-sm float-right mt-2"
+                                                            title="Supprimer {{ track.titre }}" id="{{ track.id }}"><span class="fas fa-trash-alt"></span></a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                    <div class="col mb-2">{{ form_widget(albumForm.tracks) }}</div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right">{{ form_row(albumForm.valider) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(albumForm) }}
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('event') }}
+        {{ encore_entry_script_tags('album') }}
+    {% endblock %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

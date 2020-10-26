@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    <hr>
+    {% if ajout is same as(true) %}
+        <h3 class="card-position">Ajouter nouveau track</h3>
+    {% else %}
+        <h3 class="card-position">Modifier track</h3>
+    {% endif %}
+    {{ form_start(formTrack, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="card shadow mr-5 mt-3 mb-3 mb-lg-0 card-position-track">
+        <div class="card border-0 card-body-track">
+            <div class="form-group">
+                <div class="form-row ml-2 mt-2">
+                    <div class="container w-50">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col mb-2">{{ form_widget(formTrack.titre) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">{{ form_widget(formTrack.artists) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2">{{ form_widget(formTrack.genre) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2">{{ form_widget(formTrack.album) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">{{ form_row(formTrack.url) }}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="float-right">{{ form_row(formTrack.valider) }}</div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(formTrack) }}
+</main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('event') }}
+    {% endblock %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

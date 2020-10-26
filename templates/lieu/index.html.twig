@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LieuController!{% endblock %}
+
+{% block body %}
+    <main>
+        <hr>
+        {% for lieu in lieux %}
+            <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0">
+                <div class="card border-0 card-body">
+                    <div class="form-group">
+                        <div class="form-row ml-2 mt-2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 flex-column">
+                                        <h2><a href="{{ path('modifier_lieu', {'id': lieu.id}) }}">{{ lieu.nom }}</a></h2>
+                                    </div>
+                                </div>
+                                <div class="flex-row">
+                                    <p>{{ lieu.adresse }}, {{ lieu.codePostal }}, {{ lieu.ville | upper }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+{% endblock %}

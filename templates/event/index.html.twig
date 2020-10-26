@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EventController!{% endblock %}
+
+{% block body %}
+    <main>
+        <hr>
+        {% for event in events %}
+            <div class="card shadow ml-5 w-90 mt-3 mr-5 mb-3 mb-lg-0">
+                <div class="card border-0 card-body">
+                    <div class="form-group">
+                        <div class="form-row ml-2 mt-2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 flex-column">
+
+                                        <h1>
+                                            {{ event.nom }}
+                                            {% if is_granted(['ROLE_ADMIN']) %}
+                                                <div class="btn-delete float-right">
+
+                                                </div>
+                                            {% endif %}
+                                            {% if ['ROLE_ADMIN'] %}
+                                                <button class="btn btn-primary mr-3 float-right"><a
+                                                            class="text-white"
+                                                            href="{{ path('modifier_event', {'id' : event.id}) }}"><i
+                                                                class="fas fa-edit"></i></a>
+                                                </button>
+                                            {% endif %}
+                                        </h1>
+                                        <h3>
+                                            <ul>
+                                                {% for artist in event.artists %}
+                                                    <li>{{ artist.nom }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </h3>
+                                    </div>
+
+                                </div>
+
+                                <div class="flex-row">
+                                    <img src="img/photos/event/{{ event.image }}"
+                                         class="float-left borderimg mr-2">
+                                    <p>{{ event.contenu }}</p>
+                                </div>
+                                <div class="flex-row">
+                                    <p><u>Date de l'évènement:</u> {{ event.date | date('d/m/Y') }}</p>
+                                </div>
+                                <div class="flex-row">
+                                    <p><u>Lieu de l'évènement:</u> {{ event.lieu.nom }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <hr>
+        {% endfor %}
+    </main>
+{% endblock %}

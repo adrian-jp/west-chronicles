@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Repertoire des artistes{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('list_artist') }}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <hr>
+
+        <div class="card shadow ml-5 w-90 mt-3 mr-5 mb-3 mb-lg-0">
+            <div class="card border-0 card-body">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <div class="container-fluid">
+                            <div class="flex-row d-flex flex-wrap justify-content-start">
+                                {% for artist in artists %}
+                                    <div class="col-4">
+                                        {% include 'artist/_template-artist-card.html.twig' %}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 32em">{{ knp_pagination_render(artists, null, {}, {'size': 'small'}) }}</div>
+        <hr>
+        <hr>
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('list_artist') }}
+    {% endblock %}
+{% endblock %}

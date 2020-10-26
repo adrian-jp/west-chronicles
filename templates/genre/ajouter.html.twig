@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3 class="card-position">Ajouter nouveau style musical</h3>
+    {{ form_start(genreForm) }}
+    <div class="card shadow card-position mr-3 w-75 mt-3 mb-3 mb-lg-0">
+        <div class="card border-0 card-body">
+            <div class="form-group">
+                <div class="form-row ml-2 mt-2">
+                    <div class="container">
+                        <div class="row mb-3">
+                            <div class="col">{{ form_label(genreForm.nom) }}</div>
+                            <div class="col-9">{{ form_widget(genreForm.nom) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-9">{{ form_widget(genreForm.valider) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(genreForm) }}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

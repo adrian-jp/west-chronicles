@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="page__split">
+            <div class="page__main">
+                {% for article in articles %}
+                    {% if article.published and articles|last %}
+                        <div class="card shadow ml-5 mt-3 mr-5 mb-3 mb-lg-0">
+                            <div class="card border-0 card-body">
+                                <div class="form-group">
+                                    <div class="form-row ml-2 mt-2">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12 flex-column">
+
+                                                    <h1>
+                                                        {{ article.titre }}
+                                                        {% if is_granted(['ROLE_ADMIN']) %}
+                                                            <div class="btn-delete float-right">
+
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if ['ROLE_ADMIN'] %}
+                                                            <button class="btn btn-primary mr-3 float-right"><a
+                                                                        class="text-white"
+                                                                        href="{{ path('modifier_article', {'id' : article.id}) }}"><i
+                                                                            class="fas fa-edit"></i></a>
+                                                            </button>
+                                                        {% endif %}
+                                                    </h1>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="flex-row">
+                                                <img src="img/photos/article/{{ article.image }}"
+                                                     class="float-left borderimg mr-2">
+                                                <p>{{ article.contenu }}</p>
+                                            </div>
+                                            <div class="flex-row"><p><u>Auteur :</u> {{ article.auteur }} (publié
+                                                    le {{ article.datePublication | date('d/m/Y') }})</p></div>
+                                            <div class="flex-row">
+                                                <ul style="list-style-type:none">
+                                                    {% for commentaire in article.commentaires %}
+                                                        {% if commentaire.publiable %}
+                                                            <li><textarea class="w-100"
+                                                                          readonly>"{{ commentaire.contenu }}" ({{ commentaire.auteur }}, {{ commentaire.date }})</textarea>
+                                                            </li>
+                                                        {% elseif commentaire.publiable is same as(false) and is_granted(['ROLE_ADMIN']) %}
+                                                            <li>
+                                                                <div>
+                                        <textarea class="w-75"
+                                                  readonly>"{{ commentaire.contenu }}" ({{ commentaire.auteur }}, {{ commentaire.date }})
+                                        </textarea>
+                                                                </div>
+                                                            </li>
+
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <hr class="w-90">
+                    {% endif %}
+                {% endfor %}
+                <p class="ml-5"><a href="{{ path('article') }}">Voir le reste des articles ...</a></p>
+            </div>
+            <div class="page__secondary">
+                {{ form_start(formSearchArtist) }}
+                <div class="row mb-5">
+                    <div class="form-group has-search mb-0 p-2 d-flex align-items-center ">
+                        {{ form_widget(formSearchArtist.nom) }}{{ form_widget(formSearchArtist.departement) }}
+                        <div>{{ form_widget(formSearchArtist.search) }}</div>
+                    </div>
+                </div>
+                {{ form_end(formSearchArtist) }}
+                <h4><u>Evènements à venir :</u></h4>
+                <br>
+                {% for event in events %}
+                    <div class="container-fluid">
+                        <div class="flex-row">
+                            <a href="{{ path('event') }}"><img src="img/photos/event/{{ event.image }}"
+                                    class="float-left borderimg mr-2 w-50"></a>
+                            <h5><a {% if is_granted('ROLE_ADMIN') %}href="{{ path('creation_event') }}"{% endif %}>{{ event.nom }}</a></h5>
+                            <p>{{ event.artists.first.nom }}</p>
+                        </div>
+                        <div class="flex-row"><p>date : {{ event.date | date('d/m/Y') }}</p></div>
+                        <br>
+                        <hr class="w-90">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

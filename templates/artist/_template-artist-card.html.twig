@@ -1,0 +1,52 @@
+<div class="flip-card">
+    <div class="flip-card-inner">
+        <div class="flip-card-front">
+            <div class="container">
+                <img src="{% if artist.image is not null %}
+                {% set src =  artist.image|instanceOf('Symfony\\Component\\HttpFoundation\\File\\File')? artist.image.basename:artist.image %}
+                {{ asset('img/photos/artiste/' ~ artist.image) }}
+            {% else %}
+                {{ asset('img/photos/artiste/avatar.png') }}
+            {% endif %}" alt="Avatar" style="width:16em;height:17em;">
+                <h1 class="text-dark artist-title ml-2"><b>{{ artist.nom }}</b></h1>
+            </div>
+        </div>
+        <div class="flip-card-back">
+            <h1><a href="{{ path('modifier_artist', {'id': artist.id}) }}"
+                   class="text-dark"><b>{{ artist.nom }}</b></a></h1>
+            <h5><u>Département</u> : {{ artist.departement }}</h5>
+            <ul>
+                <li>
+                    <a {% if artist.clips | length > 0 %}href="{{ path('artiste_one_id', {'id': artist.id}) }}"{% endif %}
+                       class="text-decoration-none text-dark">Clips
+                        ({{ artist.clips|length }})</a></li>
+                {% if artist.tracks is not null %}
+                    <li><a>Sons ({{ artist.tracks|length }})</a></li>
+                {% endif %}
+                {% if artist.albums | length > 0 %}
+                    <li>
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm"
+                                    type="button">
+                                Albums
+                            </button>
+                            <button type="button"
+                                    class="btn btn-sm btn-secondary dropdown-toggle"
+                                    id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% for album in artist.albums %}
+                                    <a class="dropdown-item"
+                                       href="{{ path('one_album', {'id':album.id}) }}">{{ album.nom }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    {{ form_start(formClip, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0 card-position">
+        <div class="card border-0 card-body">
+            <div class="form-group">
+                <div class="form-row ml-2 mt-2">
+                    <h1 class="mb-3">Ajouter nouveau clip</h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col mb-2">{{ form_label(formClip.titre) }}</div>
+                                    <div class="col mb-2">{{ form_widget(formClip.titre) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2">{{ form_widget(formClip.artists) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">{{ form_label(formClip.genre) }}</div>
+                                    <div class="col-md-6 mb-2">{{ form_widget(formClip.genre) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2">{{ form_label(formClip.url) }}</div>
+                                    <div class="col mb-2">{{ form_widget(formClip.url) }}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="float-right">{{ form_row(formClip.valider) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(formClip) }}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('event') }}
+    {% endblock %}
+</main>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

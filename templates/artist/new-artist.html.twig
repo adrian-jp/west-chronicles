@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main>
+    <hr>
+    {% if ajout is same as(true) %}
+        <h3>Ajouter nouvel artiste</h3>
+    {% else %}
+        <h3>Modifier artiste</h3>
+    {% endif %}
+    {{ form_start(artistForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="card shadow ml-5 w-90 mt-3 mr-5 mb-3 mb-lg-0">
+        <div class="card border-0 card-body">
+            <div class="form-group">
+                <div class="form-row ml-2 mt-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 flex-column">
+                                <div class="col-6 float-right">{% if artist.nom is not null %}<h1>{{ artist.nom }}</h1>{% endif %}</div>
+                                <img class="style-image border-dark border-right border-bottom rounded mb-2 w-50"
+                                     id="photo-artist"
+                                     src="{% if artist.image is not null %}
+                                            {{ asset('img/photos/artiste/' ~ artist.image) }}
+                                            {% else %}
+                                            {{ asset('img/photos/artiste/avatar.png') }}
+                                            {% endif %}">
+                                <div>
+                                    <div class="btn btn-xs w-50 text-left float-left">{{ form_row(artistForm.image) }}</div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-danger btn-xs mt-1 float-left ml-n5" id="btn-delete-photo"
+                                            data-id="{{ artist.id }}" onclick="deletePhoto()"><span
+                                                class="fas fa-trash-alt"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_label(artistForm.nom) }}</div>
+                            <div class="col-9">{{ form_widget(artistForm.nom) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">{{ form_label(artistForm.departement) }}</div>
+                            <div class="col-9">{{ form_widget(artistForm.departement) }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-9">{{ form_widget(artistForm.valider) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(artistForm) }}
+    <hr><hr>
+</main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('form') }}
+        {{ encore_entry_script_tags('edit_artist') }}
+    {% endblock %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

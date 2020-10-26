@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        {% if ajout is same as(true) %}
+            <h3 class="card-position">Ajouter nouvel évènement</h3>
+        {% else %}
+            <h3 class="card-position">Modifier évènement</h3>
+        {% endif %}
+        {{ form_start(eventForm) }}
+        <div class="card shadow card-position mr-3 w-75 mt-3 mb-3 mb-lg-0">
+            <div class="card border-0 card-body">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <div class="container">
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(eventForm.nom) }}</div>
+                                <div class="col-9">{{ form_widget(eventForm.nom) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mt-2">{{ form_widget(eventForm.artists) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(eventForm.lieu) }}</div>
+                                <div class="col-9">{{ form_widget(eventForm.lieu) }}</div>
+                            </div>
+                            <div class="row">
+                                {% if event.image is not null %}
+                                    <div class="col">
+                                        <img src="{{ asset('img/photos/event/') }}{{ event.image }}"
+                                             alt="photo article" class="w-100 float-left">
+                                    </div>
+                                {% endif %}
+                                <div class="col-9">{{ form_widget(eventForm.contenu) }}</div>
+                            </div>
+                            <div class="col-6 mt-3 mb-3">
+                                <div class="row">
+                                    <div class="col">{{ form_label(eventForm.image) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-9">{{ form_widget(eventForm.image) }}</div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col">{{ form_label(eventForm.date) }}</div>
+                                <div class="col-9">{{ form_widget(eventForm.date) }}
+                                    <i class="fas fa-calendar input-prefix" tabindex=0></i></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="flex-row">
+                                    <div class="float-right">{{ form_row(eventForm.valider) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(eventForm) }}
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('event') }}
+    {% endblock %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

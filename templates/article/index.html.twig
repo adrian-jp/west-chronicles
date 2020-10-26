@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    <main>
+        <br>
+        {% for article in articles %}
+                <div class="card shadow ml-5 w-90 mt-3 mr-5 mb-3 mb-lg-0">
+                    <div class="card border-0 card-body">
+                        <div class="form-group">
+                            <div class="form-row ml-2 mt-2">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 flex-column">
+
+                                            <h1>
+                                                {{ article.titre }}
+                                                {% if is_granted(['ROLE_ADMIN']) %}
+                                                    <div class="btn-delete float-right">
+
+                                                    </div>
+                                                {% endif %}
+                                                {% if ['ROLE_ADMIN'] %}
+                                                    <button class="btn btn-primary mr-3 float-right"><a
+                                                                class="text-white"
+                                                                href="{{ path('modifier_article', {'id' : article.id}) }}"><i
+                                                                    class="fas fa-edit"></i></a>
+                                                    </button>
+                                                {% endif %}
+                                            </h1>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex-row">
+                                        <img src="img/photos/article/{{ article.image }}"
+                                             class="float-left borderimg mr-2">
+                                        <p>{{ article.contenu }}</p>
+                                    </div>
+                                    <div class="flex-row"><p><u>Auteur :</u> {{ article.auteur }} (publié
+                                            le {{ article.datePublication | date('d/m/Y') }})</p></div>
+                                    <div class="flex-row">
+                                        <ul style="list-style-type:none">
+                                            {% for commentaire in article.commentaires %}
+                                                {% if commentaire.publiable %}
+                                                    <li><textarea class="w-100"
+                                                                  readonly>"{{ commentaire.contenu }}" ({{ commentaire.auteur }}, {{ commentaire.date }})</textarea>
+                                                    </li>
+                                                {% elseif commentaire.publiable is same as(false) and is_granted(['ROLE_ADMIN']) %}
+                                                    <li>
+                                                        <div>
+                                        <textarea class="w-75"
+                                                  readonly>"{{ commentaire.contenu }}" ({{ commentaire.auteur }}, {{ commentaire.date }})
+                                        </textarea>
+                                                        </div>
+                                                    </li>
+
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+        {% endfor %}
+
+    </main>
+{% endblock %}

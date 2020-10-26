@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GenreController!{% endblock %}
+
+{% block body %}
+<main>
+    <hr>
+    <div class="card shadow ml-5 w-90 mt-3 mr-5 mb-3 mb-lg-0">
+        <div class="card border-0 card-body">
+            <div class="form-group">
+                <div class="form-row ml-2 mt-2">
+                    <div class="container">
+                        <div class="row">
+                            <ul>
+                                {% for genre in genres %}
+                                <li>{{ genre.nom }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        {% if ajout is same as(true) %}
+            <h3>Ajouter nouvel article</h3>
+        {% else %}
+            <h3>Modifier article</h3>
+        {% endif %}
+        {{ form_start(articleForm) }}
+        <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0">
+            <div class="card border-0 card-body">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <div class="container">
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(articleForm.titre) }}</div>
+                                <div class="col-9">{{ form_widget(articleForm.titre) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(articleForm.auteur) }}</div>
+                                <div class="col-9">{{ form_widget(articleForm.auteur) }}</div>
+                            </div>
+                            <div class="row">
+                                {% if article.image is not null %}
+                                    <div class="col">
+                                        <img src="{{ asset('img/photos/article/') }}{{ article.image }}"
+                                             alt="photo article" class="w-100 float-left">
+                                    </div>
+                                {% endif %}
+                                <div class="col-9">{{ form_widget(articleForm.contenu) }}</div>
+                            </div>
+                            <div class="col-6 mt-3 mb-3">
+                                <div class="row">
+                                    <div class="col">{{ form_label(articleForm.image) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-9">{{ form_widget(articleForm.image) }}</div>
+                                </div>
+                            </div>
+                            <div class="row" hidden>
+                                <div class="col">{{ form_label(articleForm.datePublication) }}</div>
+                                <div class="col-9">{{ form_widget(articleForm.datePublication) }}
+                                    <i class="fas fa-calendar input-prefix" tabindex=0></i></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-10">{{ form_label(articleForm.published) }}</div>
+                                    <div class="col">{{ form_widget(articleForm.published) }}</div>
+                                </div>
+                            </div>
+                            {% if article.commentaires is not null %}
+                                {% for commentaire in article.commentaires %}
+                                    <div class="row">
+                                        <div class="col-12 flex-column">
+                                            <textarea class="w-75"
+                                                      readonly>"{{ commentaire.contenu }}" ({{ commentaire.auteur }}, {{ commentaire.date }})</textarea>
+                                            <button class="btn btn-danger mr-3 float-right">
+                                                <a class="text-white" href="{{ path('delete_commentaire_id', {'id': commentaire.id}) }}">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="col-12">
+                                <div class="flex-row">
+                                    <div class="float-right">{{ form_row(articleForm.Valider) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(articleForm) }}
+    </main>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

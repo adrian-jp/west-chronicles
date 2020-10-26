@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+
+    <main>
+        {% if ajout is same as(true) %}
+            <h3 class="card-position">Ajouter nouveau lieu</h3>
+        {% else %}
+            <h3 class="card-position">Modifier lieu</h3>
+        {% endif %}
+        {{ form_start(lieuForm) }}
+
+        <div class="card shadow mr-3 w-75 mt-3 mb-3 mb-lg-0 card-position">
+            <div class="card border-0 card-body">
+                <div class="form-group">
+                    <div class="form-row ml-2 mt-2">
+                        <div class="container">
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(lieuForm.nom) }}</div>
+                                <div class="col-9">{{ form_widget(lieuForm.nom) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(lieuForm.adresse) }}</div>
+                                <div class="col-9">{{ form_widget(lieuForm.adresse) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(lieuForm.codePostal) }}</div>
+                                <div class="col-9">{{ form_widget(lieuForm.codePostal) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">{{ form_label(lieuForm.ville) }}</div>
+                                <div class="col-9">{{ form_widget(lieuForm.ville) }}</div>
+                            </div>
+                            <div class="col-12">
+                                <div class="flex-row">
+                                    <div class="float-right">{{ form_row(lieuForm.valider) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(lieuForm) }}
+    </main>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
