@@ -118,7 +118,7 @@ body .container .player .info-box .track-info-box:after {
 }
 body .container .player .progress-box {
     float: left;
-    min-width: 270px;
+    min-width: 240px;
     position: relative;
 }
 body .container .player .progress-box .progress-cell {
@@ -151,7 +151,7 @@ body .container .player .progress-box .progress-cell .progress .progress-indicat
 }
 body .container .player .controls-box {
     bottom: 10px;
-    left: 350px;
+    left: 320px;
     position: absolute;
 }
 body .container .player .controls-box .previous-track-btn {
@@ -251,4 +251,31 @@ body .container .play-list .play-list-row:after {
     font-size: 0;
     height: 0;
     visibility: hidden;
+}
+
+.background-album{
+    background-image: url("../../public/img/site/toppng.com-new-smartphone-with-music-controls-3180x6096.png");
+    background-size: 100% 100%;
+    width: 445px;
+    height: 854px;
+    margin-right: 5em;
+}
+
+.scrollbar {
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+}
+
+.album-card{
+    margin-top: 100em;
+}
+
+.card-header-album{
+    padding: .75rem 0.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
 }

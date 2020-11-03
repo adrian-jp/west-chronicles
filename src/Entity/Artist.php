@@ -19,7 +19,7 @@ class Artist
      * @Serializer\Expose()
      * @Serializer\Groups("show_album")
      */
-    const MAX_PER_PAGE = 6;
+    const MAX_PER_PAGE = 9;
 
     const LA = '44';
     const VE = '85';

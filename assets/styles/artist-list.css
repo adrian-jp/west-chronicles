@@ -1,7 +1,7 @@
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
     width: 15em;
-    height: 26em;
+    height: 24em;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
@@ -15,11 +15,8 @@
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card-inner.flipped {
-    -webkit-transform: rotateY( 180deg );
-    -moz-transform: rotateY( 180deg );
-    -o-transform: rotateY( 180deg );
-    transform: rotateY( 180deg );
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
 }
 
 /* Position the front and back side */
@@ -31,14 +28,26 @@
     cursor: pointer;
 }
 
+.image-artist{
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
 /* Style the back side */
 .flip-card-back {
-    width: 16em;
+    width: 15em;
     height: 17em;
-    background-image: url("../../public/img/site/backgroung_site.jpg");
+    background-image: url("../../public/img/site/toppng.com-best-photos-of-game-card-template-board-game-blank-trading-card-templates-blank-742x1025.png");
+    background-size: 100% 100%;
+    background-color: white;
     color: black;
     transform: rotateY(180deg);
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
 }
+
 .artist-title{
     -webkit-transform: rotate(90deg);
     -webkit-transform-origin: left top;
@@ -50,12 +59,12 @@
     -o-transform-origin: left top;
     transform: rotate(90deg);
     transform-origin: left top;
-
+    color: rgba(0,0,0,0);
     position: absolute;
-    top: 0;
-    left: 100%;
+    top: 15px;
+    left: 95%;
     white-space: nowrap;
-    font-size: 48px;
-    margin-left: 5em;
+    font-size: 43px;
+    margin-right: 5em;
 }
 

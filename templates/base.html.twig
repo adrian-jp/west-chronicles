@@ -6,8 +6,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans">
-        <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="https://kit.fontawesome.com/eef4a58631.js" crossorigin="anonymous"></script>
+
         {% block stylesheets %}
             {# 'app' must match the first argument to addEntry() in webpack.config.js #}
             {{ encore_entry_link_tags('app') }}
@@ -20,7 +19,7 @@
     <div class="banniere">
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ path('home') }}">
+        <a class="navbar-brand mr-n5" href="{{ path('home') }}">
             <img src="{{ asset('img/site/BanniereWC.jpeg') }}" class="w-50 mr-xl-n5">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +28,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -67,10 +66,8 @@
                     <a class="nav-link" href="{{ path('event') }}">Live</a>
                 </li>
             </ul>
-{#            <form class="form-inline my-2 my-lg-0" action="src/Form/SearchArtistFormType.php" method="get">#}
-{#                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
-{#                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
-{#            </form>#}
+            <a href="{{ path('app_login') }}" class="badge badge-primary mr-2">login</a>
+            <a href="{{ path('app_logout') }}" class="badge badge-dark mr-xl-n1">logout</a>
         </div>
     </nav>
         {% block body %}{% endblock %}
@@ -81,6 +78,8 @@
                 <script src="/build/runtime.js"></script>
                 <script src="/build/app.js"></script> -->
         {% endblock %}
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="https://kit.fontawesome.com/eef4a58631.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>

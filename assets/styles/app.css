@@ -57,6 +57,10 @@ main {
     }
 }
 
+.card{
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
 .contenu-article {
     width: 500px;
     height: 500px;

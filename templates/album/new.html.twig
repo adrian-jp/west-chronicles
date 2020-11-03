@@ -17,7 +17,7 @@
             <h3>Modifier album</h3>
             <a href="{{
                 path('one_album', {'id': album.id})
-            }}" class="btn btn-primary float-right ml-2"><i class="fas fa-arrow-left"></i> Retour à l'album</a>
+            }}" class="btn btn-primary float-right mr-5"><i class="fas fa-arrow-left"></i> Retour à l'album</a>
         {% endif %}
         {{ form_start(albumForm, {'attr': {'novalidate': 'novalidate'}}) }}
         <div class="card shadow mr-3 w-50 mt-3 mb-3 mb-lg-0 card-position-track">
@@ -46,10 +46,12 @@
                                                 <div class="col-12">
                                                 <ul>
                                                     {% for track in album.tracks %}
-                                                        <li class="mb-2">
-                                                            {{ track.titre }}
-                                                            <a name="delete-{{ track.titre }}" href="{{ path('delete_track', {'id': album.id, 'track_id': track.id}) }}" class="album-track-collection collection-remove btn btn-danger btn-sm float-right mt-2"
-                                                            title="Supprimer {{ track.titre }}" id="{{ track.id }}"><span class="fas fa-trash-alt"></span></a>
+                                                        <li class="mb-4">
+                                                            <div class="col-12">
+                                                            {{ track.titre | u.truncate(28) }}
+                                                            <a name="delete-{{ track.titre }}" href="{{ path('delete_track', {'id': album.id, 'track_id': track.id}) }}" class="album-track-collection collection-remove btn btn-danger btn-sm float-right"
+                                                            title="Supprimer {{ track.titre }}" id="{{ track.id }}" onclick="return confirm('Voulez-vous vraiment effacer {{ track.titre }}?')"><span class="fas fa-trash-alt"></span></a>
+                                                            </div>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>

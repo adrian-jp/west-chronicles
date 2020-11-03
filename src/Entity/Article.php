@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article
 {
-    const MAX_PER_PAGE = 4;
+    const MAX_PER_PAGE = 3;
 
     use TraitImage;
     /**

@@ -15,14 +15,49 @@
             <div class="card border-0 card-body">
                 <div class="form-group">
                     <div class="form-row ml-2 mt-2">
+                        <div class="list-group mt-3 h6 list-group-horizontal mb-5 mx-auto" >
+                            <a href="#A" class="ml-2">A</a>
+                            <a href="#B" class="ml-2">B</a>
+                            <a href="#C" class="ml-2">C</a>
+                            <a href="#D" class="ml-2">D</a>
+                            <a href="#E" class="ml-2">E</a>
+                            <a href="#F" class="ml-2">F</a>
+                            <a href="#G" class="ml-2">G</a>
+                            <a href="#H" class="ml-2">H</a>
+                            <a href="#I" class="ml-2">I</a>
+                            <a href="#J" class="ml-2">J</a>
+                            <a href="#K" class="ml-2">K</a>
+                            <a href="#L" class="ml-2">L</a>
+                            <a href="#M" class="ml-2">M</a>
+                            <a href="#N" class="ml-2">N</a>
+                            <a href="#O" class="ml-2">O</a>
+                            <a href="#P" class="ml-2">P</a>
+                            <a href="#Q" class="ml-2">Q</a>
+                            <a href="#R" class="ml-2">R</a>
+                            <a href="#S" class="ml-2">S</a>
+                            <a href="#T" class="ml-2">T</a>
+                            <a href="#U" class="ml-2">U</a>
+                            <a href="#V" class="ml-2">V</a>
+                            <a href="#W" class="ml-2">W</a>
+                            <a href="#X" class="ml-2">X</a>
+                            <a href="#Y" class="ml-2">Y</a>
+                            <a href="#Z" class="ml-2">Z</a>
+                        </div>
+                        {% set oldLetter = '' %}
                         <div class="container-fluid">
                             <div class="flex-row d-flex flex-wrap justify-content-start">
+
                                 {% for artist in artists %}
-                                    <div class="col-4">
+                                    {% set letter = artist.nom | slice(0,1) | upper %}
+                                    {% dump letter %}
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        {% if ( oldLetter != letter)  %}
+                                            <div id="{{ letter }}"></div>
+                                            {%  set oldLetter = letter %}
+                                        {% endif %}
                                         {% include 'artist/_template-artist-card.html.twig' %}
                                     </div>
                                 {% endfor %}
-
                             </div>
                         </div>
                     </div>

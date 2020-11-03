@@ -62,4 +62,5 @@ class Extension extends AbstractExtension implements GlobalsInterface
 
         return $reflectionClass->isInstance($object);
     }
+
 }

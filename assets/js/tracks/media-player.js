@@ -1,4 +1,4 @@
-import('../../styles/media-player.css')
+import('../../styles/media-player.scss')
 
 let audioPlayer = function () {
     "use strict";
@@ -470,9 +470,3 @@ let audioPlayer = function () {
 
     player.initPlayer();
 })();
-
-function initAudio() {
-    var player = new audioPlayer();
-
-    player.initPlayer();
-}

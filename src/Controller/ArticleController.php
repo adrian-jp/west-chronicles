@@ -59,9 +59,10 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article", name="article")
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = $this->repository->findAll();
+        $pageNumber = $request->get('page')?? 1;
+        $articles = $this->repository->findAllArticlesPaginate($pageNumber, Article::MAX_PER_PAGE);
         $commentaires = $this->commentaireRepository->findAll();
         return $this->render('article/index.html.twig', [
             'articles' => $articles,

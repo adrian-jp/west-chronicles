@@ -5,20 +5,16 @@ namespace App\Controller;
 use App\Entity\Album;
 use App\Entity\Track;
 use App\Form\AlbumFormType;
-use App\Form\TrackFormType;
 use App\Model\TypeFile;
 use App\Repository\AlbumRepository;
 use App\Repository\TrackRepository;
 use App\Service\AlbumService;
-use App\Service\FileUploader;
 use App\Service\FileUploaderService;
 use App\Service\TrackService;
 use App\Util\Utility;
-use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,13 +47,15 @@ class AlbumController extends AbstractController
         $this->serializer = $serializer;
     }
 
-
     /**
      * @Route("/album", name="album")
+     *
+     * @return Response
      */
     public function index()
     {
         $albums = $this->albumRepository->findAll();
+
         return $this->render('album/index.html.twig', [
             'albums' => $albums,
         ]);
@@ -65,40 +63,53 @@ class AlbumController extends AbstractController
 
     /**
      * @Route("/album/one/detail/{id}", name="one_album", requirements={"id":"\d+"}, options={"expose" = true})
+     *
      * @param Album $album
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function allTrackInAlbum(Album $album)
     {
+        if ($this->container->has('debug.stopwatch')) {
+            $stopwatch = $this->get('debug.stopwatch');
+
+            $stopwatch->start('sleep action');
+            sleep(5);
+            $stopwatch->stop('sleep action');
+        }
         $album = $this->albumRepository->findAllTracksOfAlbum($album->getId());
-        //dd($album);
+
         return $this->render('album/one.html.twig', [
             'album' => $album[0],
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
 
     /**
      * @Route("/album/one/{id}", name="one_album_json", requirements={"id":"\d+"}, options={"expose" = true})
+     *
      * @param Album $album
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function allTrackInAlbumJson(Album $album)
     {
         $album = $this->albumRepository->find($album->getId());
         $albumJson = $this->serializer->serialize($album, 'json');
+
         return new Response($albumJson);
     }
 
     /**
      * @Route("/album/new", name="new_album", options={"expose" = true})
      * @Route("/album/modifier/{id}", name="modifier_album", requirements={"id":"\d+"})
+     *
      * @param Album|null $album
      * @param Track|null $track
      * @param Request $request
      * @param AlbumService $albumService
      * @param TrackService $trackService
      * @param FileUploaderService $fileUploaderService
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     *
      * @throws \Exception
      */
     public function ajouterOuModifierAlbum(Album $album = null, Track $track = null, Request $request, AlbumService $albumService, TrackService $trackService, FileUploaderService $fileUploaderService)
@@ -115,12 +126,10 @@ class AlbumController extends AbstractController
             $ajout = true;
         }
 
-
         $albumForm = $this->createForm(AlbumFormType::class, $album);
         $albumForm->handleRequest($request);
 
         if ($albumForm->isSubmitted() && $albumForm->isValid()) {
-
             $albumTitleInput = $albumForm->get('nom')->getData();
             $albumList = $this->albumRepository->findAll();
             $exist = false;
@@ -135,7 +144,7 @@ class AlbumController extends AbstractController
                 $extension = $imageFile->guessExtension();
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $nomAlbumCourt . '.' . $extension;
+                $newFilename = $nomAlbumCourt.'.'.$extension;
                 $imageFile->move(
                     $this->getParameter('upload_directory_album_photo'),
                     $newFilename
@@ -147,34 +156,33 @@ class AlbumController extends AbstractController
 
             //variable numero d'ordre dans l'album
             $ordre = 1;
-            for ($i = 0, $size = count($albumForm->get('tracks')->getData()); $i < $size; $i++) {
+            for ($i = 0, $size = count($albumForm->get('tracks')->getData()); $i < $size; ++$i) {
                 $track = new Track();
+
                 $trackFile = $albumForm->get('tracks')->getData()[$i]->getUrl();
                 if ($trackFile) {
                     $extension = $trackFile->guessExtension();
                 }
-                if ($trackFile && $trackFile->guessExtension() == 'mpga') {
-
+                if ($trackFile && 'mpga' == $trackFile->guessExtension()) {
                     $extension = 'mp3';
                 }
-                //dd($trackFile);
+
                 if (!is_null($track) && !is_null($trackFile) && $trackFile) {
                     $exist = false;
                     $titleCourt = Utility::generateLongToCourt($albumForm->get('tracks')->getData()[$i]->getTitre());
                     try {
                         $filename = $fileUploaderService->upload($trackFile,
                             TypeFile::TYPE_FILE_TRACK,
-                            $titleCourt . "." . $extension);
+                            $titleCourt.'.'.$extension);
                         $track->setUrl($filename);
-                        if ($extension == 'mp3') {
+                        if ('mp3' == $extension) {
                             $track->setLength($trackService->getDuration($filename));
                         }
                     } catch (\Exception $e) {
                     }
                 }
-                //dd($albumForm->get('tracks')->getData()[$i]);
                 if (!$ajout) {
-                    $track->setOrdreAlbum(count($album->getTracks())+1);
+                    $track->setOrdreAlbum(count($album->getTracks()) + 1);
                 } else {
                     $track->setOrdreAlbum($ordre);
                 }
@@ -184,30 +192,26 @@ class AlbumController extends AbstractController
                 $track->setGenre($albumForm->get('tracks')->getData()[$i]->getGenre());
                 $track->setAlbum($albumForm->getData());
 
-
-
                 $trackService->addOrEditInAlbum($track);
                 //dd($track);
 
-
                 $album->addTrack($track);
                 $ordre = $ordre + 1;
-
             }
+
             if (!$exist) {
                 //dd($album);
                 $albumService->addOrEdit($album);
-                $this->redirectToRoute('artist');
+                $this->redirectToRoute('one_album', ['id' => $album->getId()]);
             } else {
                 $this->addFlash('warning', 'Cet album existe déjà sur le site');
             }
-
         }
 
         return $this->render('album/new.html.twig', [
             'albumForm' => $albumForm->createView(),
             'ajout' => $ajout,
-            'album' => $album
+            'album' => $album,
         ]);
     }
 
@@ -215,14 +219,29 @@ class AlbumController extends AbstractController
      * @Route("/album/{id}/delete_track/{track_id}", name="delete_track", options={"expose"=true})
      * @ParamConverter("id", class="App\Entity\Album", options={"id": "id"})
      * @ParamConverter("track_id", class="App\Entity\Track", options={"id": "track_id"})
-     * @param Track $track
+     *
      * @param Album $album
      * @param AlbumService $albumService
+     * @param Request $request
+     * @param TrackService $trackService
      * @return Response
      */
-    public function deleteTrackInAlbum(Track $track, Album $album, AlbumService $albumService)
+    public function deleteTrackInAlbum(Album $album, AlbumService $albumService, Request $request, TrackService $trackService)
     {
-        $album->removeTrack($track);
+        $allTracks = $album->getTracks()->toArray();
+        $id = substr($request->getPathInfo(), strrpos($request->getPathInfo(), '/') + 1);
+
+        //Ajuste l'ordre des tracks à partir de l'élément effacé
+        for ($i = 0; $i < count($allTracks); ++$i) {
+            if ($allTracks[$i]->getId() == $id) {
+                $lastTracks = array_splice($allTracks, $allTracks[$i]->getId());
+                foreach ($lastTracks as $newOrder) {
+                    $newOrder->setOrdreAlbum($newOrder->getOrdreAlbum() - 1);
+                    $trackService->addOrEditInAlbum($newOrder);
+                }
+                $album->removeTrack($allTracks[$i]);
+            }
+        }
         $albumService->addOrEdit($album);
 
         return $this->redirectToRoute('modifier_album', ['id' => $album->getId()]);

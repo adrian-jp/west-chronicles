@@ -1,16 +1,16 @@
-<div class="container-album" id="container-album">
-    <div class="card text-white bg-secondary mb-3 container-album" style="max-width: 26rem; overflow: hidden">
-        <div class="card-header">
+<div class="container-album  background-album" id="container-album">
+    <div class="album-card card text-white bg-secondary container" style="max-width: 26rem; overflow: hidden">
+        <div class="card-header-album mt-5 ml-2">
             <img src="{% if album.image is not null %}
                 {% set src =  album.image|instanceOf('Symfony\\Component\\HttpFoundation\\File\\File')? album.image.basename:album.image %}
                 {{ asset('img/photos/album/' ~ src) }}
                 {% else %}
                 {{ asset('img/photos/album/cd-rom-4093712_1920.png') }}
                 {% endif %}
-                " class="image-album float-right">
+                " class="image-album float-right ml-3">
             <h5 id="album-titre"><a href="{{ path('modifier_album', {'id': album.id}) }}">{{ album.nom }}</a></h5>
         </div>
-        <div class="card-body">
+        <div class="card-body mt-5 w-75" >
             <audio id="audio" preload="none" tabindex="0">
 
             </audio>
@@ -52,17 +52,17 @@
 
 
             </div>
-            <div class="play-list">
+            <div class="play-list scrollbar">
                 {% for track in album.tracks %}
-                    {% dump track.ordreAlbum %}
+{#                    {% dump track.ordreAlbum %}#}
                     <div class="play-list-row" data-track-row="{{ track.ordreAlbum }}">
                         <div class="small-toggle-btn">
                             <i class="small-play-btn"><span class="screen-reader-text">Small toggle button</span></i>
                         </div>
                         <div class="track-number"> {{ track.ordreAlbum }}.</div>
                         <div class="track-title">
-                            <a class="playlist-track" href="#"
-                               data-play-track="{{ track.ordreAlbum }}" title="{{ track.titre }}">{{ track.titre }}</a>
+                            <a class="playlist-track text-white" href="#"
+                               data-play-track="{{ track.ordreAlbum }}" title="{{ track.titre }}">{{ track.titre | u.truncate(43, '...') }}</a>
                         </div>
                     </div>
                 {% endfor %}

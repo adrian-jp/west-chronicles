@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,11 +13,16 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Article[]    findAll()
  * @method Article[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArticleRepository extends ServiceEntityRepository
+class ArticleRepository extends KnpPaginatorRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * ArticleRepository constructor.
+     * @param ManagerRegistry $registry
+     * @param PaginatorInterface $paginator
+     */
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
-        parent::__construct($registry, Article::class);
+        parent::__construct($paginator, $registry, Article::class);
     }
 
     /**
@@ -30,6 +36,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function findAllArticlesPaginate($pageNumber=1, $maxPerPage=Article::MAX_PER_PAGE) {
+        $query = $this->createQueryBuilder('article');
+
+        $query->select('article')
+            ->orderBy('article.datePublication', 'ASC')
+            ;
+        return $this->paginate($query, $pageNumber, $maxPerPage, array('wrap-queries'=>true));
     }
 
     // /**
